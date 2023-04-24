@@ -1,18 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import RegistrarDoctor from "./RegistrarDoctor";
-import { Link, redirect } from "react-router-dom";
 
-const Registrar = () => {
+const RegistrarDoctor = () => {
   const [formData, setFormData] = useState({
     id: Date.now(),
     nombre: "",
     apellido: "",
-    curp: "",
     edad: "",
-    direccion: "",
+    categoria: "",
     telefono: "",
-    correo: "",
     acciones: "",
   });
 
@@ -24,7 +20,7 @@ const Registrar = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/paciente", {
+      const response = await fetch("http://localhost:5000/doctor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,14 +33,10 @@ const Registrar = () => {
       console.error(error);
     }
   };
-  const redireccion = () => {
-    return (
-      <Link to="/confidential" ></Link>
-    )
-  };
+
   return (
     <div>
-      <h2>Registrar Paciente</h2>
+      <h2>Registrar Doctor</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="nombre">Nombre:</label>
         <input
@@ -62,14 +54,7 @@ const Registrar = () => {
           onChange={handleChange}
         />
         <br />
-        <label htmlFor="curp">CURP:</label>
-        <input
-          type="text"
-          name="curp"
-          value={formData.curp}
-          onChange={handleChange}
-        />
-        <br />
+
         <label htmlFor="edad">Edad:</label>
         <input
           type="number"
@@ -78,11 +63,11 @@ const Registrar = () => {
           onChange={handleChange}
         />
         <br />
-        <label htmlFor="direccion">Dirección:</label>
+        <label htmlFor="categoria">Dirección:</label>
         <input
           type="text"
-          name="direccion"
-          value={formData.direccion}
+          name="categoria"
+          value={formData.categoria}
           onChange={handleChange}
         />
         <br />
@@ -102,12 +87,10 @@ const Registrar = () => {
           onChange={handleChange}
         />
         <br />
-        <input onClick={redireccion}  type="submit" value="Registrar" />
+        <input type="submit" value="Registrar" />
       </form>
-      <br />
-      <RegistrarDoctor/>
     </div>
   );
 };
 
-export default Registrar;
+export default RegistrarDoctor;

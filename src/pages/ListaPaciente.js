@@ -1,42 +1,102 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import FormPaciente from "./FormPaciente";
 
 const ListaPaciente = () => {
-  
-  return (
-    <table className="table container mt-3">
-      <thead>
-      <tr>
-        <th colSpan="9" className="text-center">Lista de paciente</th>
-      </tr>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">CURP</th>
-          <th scope="col">Edad</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Correo</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody className="table-group-divider">
-        
-        <tr>
-          
-          <td >Dato1</td>
-          <td >Dato2</td>
-          <td >Dato3</td>
-          <td >Dato4</td>
-          <td >Dato5</td>
-          <td >Dato6</td>
-          <td >Dato7</td>
-          <td >Dato8</td>
-		<td>Editar Eliminar</td>
-        </tr>
+  const [pacientes, setPacientes] = useState([]);
+  const [editingPaciente, setEditingPaciente] = useState(null);
 
-      </tbody>
-    </table>
+  useEffect(() => {
+    fetch("http://localhost:5000/paciente")
+      .then((response) => response.json())
+      .then((data) => {
+        setPacientes(data);
+      });
+  }, []);
+
+  const handleEdit = (paciente) => {
+    setEditingPaciente(paciente);
+  };
+
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/paciente/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then(() => {
+        // Eliminar el paciente de la lista
+        setPacientes(pacientes.filter((paciente) => paciente.id !== id));
+      });
+  };
+
+  const handleSave = (paciente) => {
+    fetch(`http://localhost:5000/paciente/${paciente.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(paciente),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Actualizar el paciente en la lista
+        const index = pacientes.findIndex((p) => p.id === data.id);
+        pacientes[index] = data;
+        setPacientes([...pacientes]);
+        setEditingPaciente(null);
+      });
+  };
+  return (
+    <div className="container">
+      <table className="table mt-3">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>CURP</th>
+            <th>Edad</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pacientes.map((paciente) => (
+            <tr key={paciente.id}>
+              <td>{paciente.nombre}</td>
+              <td>{paciente.apellido}</td>
+              <td>{paciente.curp}</td>
+              <td>{paciente.edad}</td>
+              <td>{paciente.direccion}</td>
+              <td>{paciente.telefono}</td>
+              <td>{paciente.correo}</td>
+              <td>
+                <button
+                  className="btn btn-primary btn-sm mr-1"
+                  onClick={() => handleEdit(paciente)}
+                >
+                  Editar
+                </button>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(paciente.id)}
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {editingPaciente && (
+        <FormPaciente
+          paciente={editingPaciente}
+          onSave={handleSave}
+          onCancel={() => setEditingPaciente(null)}
+        />
+      )}
+    </div>
   );
 };
 

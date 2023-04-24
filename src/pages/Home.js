@@ -1,9 +1,10 @@
 import React,{useEffect, useState} from 'react'
+import Contador from './Contador'
 
 const Home = () => {
   
   return (
-   <div>Hola Mundo</div>
+   <Contador/>
   )
 }
 

@@ -1,16 +1,51 @@
 {
   "persona": [
     {
-      "name": "Francisco",
-      "lastname": "Perez",
-      "age": 30,
-      "curp": "asdsa",
-      "address": "solo la calle",
-      "phone": 123456,
-      "email": "example@gmail.com",
-      "height": 1.7,
-      "weight": 1.7,
-      "category": "paciente"
+      "correo": "example@example.com",
+      "contraseña": "ajua"
+    }
+  ],
+  "paciente": [
+    {
+      "nombre": "Luis",
+      "apellido": "Hernandez",
+      "curp": "HEGL011009HSRRRSA3",
+      "edad": "21",
+      "direccion": "Benito Juarez #50",
+      "telefono": "6441543653",
+      "correo": "luilmhg70@gmail.com",
+      "acciones": "Nose"
+    },
+    {
+      "id": 1682298977341,
+      "nombre": "AJua",
+      "apellido": "ssss",
+      "curp": "HEGL011009HSRRRSA3",
+      "edad": "20",
+      "direccion": "four 4",
+      "telefono": "555",
+      "correo": "aju@gmail.com",
+      "acciones": ""
+    }
+  ],
+  "doctor": [
+    {
+      "nombre": "Manuel",
+      "apellido": "Grijalva",
+      "edad": "22",
+      "cateogria": "Choro",
+      "telefono": "6441543653",
+      "acciones": "marihaunear"
+    },
+    {
+      "id": 1682291533451,
+      "nombre": "Karla",
+      "apellido": "Garcia",
+      "edad": "20",
+      "categoria": "ss",
+      "telefono": "45",
+      "acciones": "",
+      "correo": "aju@gmail.com"
     }
   ]
 }
